@@ -1,8 +1,70 @@
 import turtle
 import random
+import tkinter as tk
+from tkinter import messagebox
 wn = turtle.Screen()
-wn.colormode = "255"
+wn.bgcolor("green")
 wn.bgpic(r"C:\Users\Kshitiz Trigunayat\OneDrive\Desktop\python\Python-project\bg.png")
+class Application(tk.Frame):
+    def __init__(self, master=None):
+        super().__init__(master)
+        self.master = master
+        self.pack()
+        self.create_widgets()
+
+    def create_widgets(self):
+        # Labels
+        self.num_trees_label = tk.Label(self)
+        self.num_trees_label["text"] = "Number of Trees:"
+        self.num_trees_label.pack(side="top")
+
+        self.x_coordinate_label = tk.Label(self)
+        self.x_coordinate_label["text"] = "X Coordinate:"
+        self.x_coordinate_label.pack(side="top")
+
+        self.y_coordinate_label = tk.Label(self)
+        self.y_coordinate_label["text"] = "Y Coordinate:"
+        self.y_coordinate_label.pack(side="top")
+
+        # Entries
+        self.num_trees_entry = tk.Entry(self)
+        self.num_trees_entry.pack(side="top")
+
+        self.x_coordinate_entry = tk.Entry(self)
+        self.x_coordinate_entry.pack(side="top")
+
+        self.y_coordinate_entry = tk.Entry(self)
+        self.y_coordinate_entry.pack(side="top")
+
+        # Button
+        self.submit_button = tk.Button(self)
+        self.submit_button["text"] = "Submit"
+        self.submit_button["command"] = self.submit
+        self.submit_button.pack(side="top")
+
+    def submit(self):
+        num_trees = int(self.num_trees_entry.get() or 0)
+        x_coordinate = int(self.x_coordinate_entry.get() or 0)
+        y_coordinate = int(self.y_coordinate_entry.get() or 0)
+
+        # Display a message box with the inputs
+        messagebox.showinfo("Submitted", f"Number of Trees: {num_trees}\nX Coordinate: {x_coordinate}\nY Coordinate: {y_coordinate}")
+
+        # Create forest with turtle graphics
+        
+        
+        presapling_x = x_coordinate -300
+        presapling_y = y_coordinate
+        presaplinggrp(num_trees, presapling_x, presapling_y)
+
+        saplinggrp(num_trees, x_coordinate, y_coordinate)
+
+        create_forestx = x_coordinate +300
+        create_foresty = y_coordinate 
+        create_forest(num_trees, create_forestx, create_foresty)
+
+
+
 def tree(branch_len, t):
     angle = random.randint(22, 30)
     sf = random.uniform(0.6, 0.8)
@@ -21,6 +83,7 @@ def tree(branch_len, t):
         tree(branch_len*sf, t)
         t.left(angle)
         t.backward(branch_len)
+
 def sapling(branch_len, t1):
     angle = random.randint(20, 28)
     sf = random.uniform(0.5, 0.7)
@@ -39,24 +102,18 @@ def sapling(branch_len, t1):
         sapling(branch_len*sf, t1)
         t1.left(angle)
         t1.backward(branch_len)
+
 def saplinggrp(num_sap, x, y):
-    t1 = turtle.Turtle()
-    t1.speed(100)
-    t1.left(90)
-    t1.color("brown")
-    t1.up()
-    t1.backward(200)
-    t1.down()
-    t1.penup()
     for _ in range(num_sap):
-        t1.penup()
-        t1.goto(x, y)
-        t1.pendown()
-        sapling(100, t1)
-        x += 100
-        y += 70
-        x -= 100
-        y -= 70
+        sapling_turtle = turtle.Turtle()
+        sapling_turtle.speed(100)
+        sapling_turtle.left(90)
+        sapling_turtle.color("brown")
+        sapling_turtle.up()
+        sapling_turtle.goto(x, y)
+        sapling_turtle.down()
+        sapling(100, sapling_turtle)
+        x += 150
 
 def presapling(branch_len, t2):
     angle = random.randint(15, 25)
@@ -76,60 +133,35 @@ def presapling(branch_len, t2):
         presapling(branch_len*sf, t2)
         t2.left(angle)
         t2.backward(branch_len)
+
 def presaplinggrp(num_sap, x, y):
-    t2 = turtle.Turtle()
-    t2.speed(100)
-    t2.left(90)
-    t2.color("brown")
-    t2.up()
-    t2.backward(200)
-    t2.down()
-    t2.penup()
     for _ in range(num_sap):
-        t2.penup()
-        t2.goto(x, y)
-        t2.pendown()
-        presapling(100, t2)
-        x += 100
-        y += 70
-        x -= 100
-        y -= 70
+        presapling_turtle = turtle.Turtle()
+        presapling_turtle.speed(100)
+        presapling_turtle.left(90)
+        presapling_turtle.color("brown")
+        presapling_turtle.up()
+        presapling_turtle.goto(x, y)
+        presapling_turtle.down()
+        presapling(100, presapling_turtle)
+        x += 150
 
-
-    
 def create_forest(num_trees, x, y):
-    t = turtle.Turtle()
-    t.speed(100)
-    t.left(90)
-    t.color("brown")
-    t.up()
-    t.backward(200)
-    t.down()
-    t.penup()
     for _ in range(num_trees):
-        t.penup()
-        t.goto(x, y)
-        t.pendown()
-        tree(100, t)
-        x += 100
-        y += 70
-        x -= 100
-        y -= 70
+        tree_turtle = turtle.Turtle()
+        tree_turtle.speed(100)
+        tree_turtle.left(90)
+        tree_turtle.color("brown")
+        tree_turtle.up()
+        tree_turtle.goto(x, y)
+        tree_turtle.down()
+        tree(100, tree_turtle)
+        x += 200
 
-presaplinggrp(1, -350, -265) or saplinggrp(1, -420, -185) or create_forest(1,-350,-85)
-presaplinggrp(1, -250, -265) or saplinggrp(1, -320, -185) or create_forest(1,-250,-85) 
-presaplinggrp(1, -150, -265) or saplinggrp(1, -220, -185) or create_forest(1, -150, -85) 
-presaplinggrp(1, -50, -265) or saplinggrp(1, -120, -185) or create_forest(1, -50, -85)
-presaplinggrp(1, +50, -265) or saplinggrp(1, -20, -185) or create_forest(1, +50, -85)
-presaplinggrp(1, +150, -265) or saplinggrp(1, +80, -185) or create_forest(1, +150, -85)
-presaplinggrp(1, +250, -265) or saplinggrp(1, +180, -185) or create_forest(1, +250, -85)
-presaplinggrp(1, +350, -265) or saplinggrp(1, +280, -185) or create_forest(1, +350, -85)
-presaplinggrp(1, +450, -265) or saplinggrp(1, +380, -185) or create_forest(1, +450, -85)
-
-
+root = tk.Tk()
+app = Application(master=root)
+app.mainloop()
 turtle.done()
 
 
 
-
-turtle.done()
